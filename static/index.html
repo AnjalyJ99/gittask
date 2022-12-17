@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link href="static/css/style1.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <body style="background-color: rgb(183, 234, 235);">
+    <h1 >Flight<span style="color:rgb(216, 151, 151)" >Hub</span></h1>
+
+    <div class="container" >
+      <div class="upload" style="  margin: auto;">
+      <button
+        type="button"
+        class="btn btn-success"
+        data-toggle="modal"
+        data-target="#myModal"
+        style="color: rgb(10, 19, 19);font-size: large;"
+      >
+        UPLOAD FILE
+        <i class="material-icons" style=" font-size: 18px;">file_upload</i>
+      </button>
+      </div>
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" style="color: rgb(32, 27, 20);">Upload a file </h4>
+            </div>
+            <form
+              method="POST"
+              action="/fileupload"
+              enctype="multipart/form-data"
+            >
+              <div class="modal-body">
+                <input
+                  class="form-control"
+                  type="file"
+                  name="filename"
+                  required
+                />
+                <input
+                  class="btn btn-success"
+                  type="submit"
+                  value="Upload"
+                  style="margin-top: 10px"
+                />
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    <div class="box">
+      <div class="box_form">
+        <form method="GET" action="/readAirport">
+          <div class="box_form_name">
+            <p style="color: rgb(233, 227, 227)">Enter airport code</p>
+            <input
+              type="text"
+              name="code"
+              placeholder="Enter airport code"
+              required
+            />
+          </div>
+          <div class="box_form_name">
+            <p style="color: rgba(255, 255, 255, 0.986)">Enter file name</p>
+            <input
+              type="text"
+              name="filename"
+              placeholder="Enter filename"
+              required
+            />
+          </div>
+          <input type="text" name="pagenum" id="pgnum" value="1" hidden />
+          <input type="text" name="sort" id="pgnum" value="1" hidden />
+          <div class="box_form_submit">
+            <input type="submit" value="Load" />
+          </div>
+        </form>
+      </div>
+  </body>
+</html>

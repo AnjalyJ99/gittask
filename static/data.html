@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="static/css/style2.css" rel="stylesheet" />
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+</head>
+<body style="background-color: rgb(183, 234, 235);">
+    <div class="navbar">
+     <h1>Flight <span style="color:rgb(216, 151, 151)">Hub</span></h1>
+     <a href="/" style="color:rgb(8, 7, 7);margin-right: 100px;text-decoration: none;">Back</a>
+    </div>
+    <div class="box">
+        <div class="box_table">
+          {{if .}}
+     <h6 class="text-center" style="font-family:verdana;">Airport Name:  <span style="color:rgb(27, 7, 100)">{{(index . 0).Airport.Name }}</span></h6>    
+<div class="pt-2">
+              <table class="table table-light table-striped ">
+                <thead class="table-light">
+                    <td class="text-center"> Total Flights</td>
+                    <td class="text-center"> Total Minutes Delayed</td>
+                    <td class="text-center"><div class="dropdown show">
+                        <a  href="#" role="button" style="text-decoration: none;" aria-haspopup="true" aria-expanded="false">
+                         Time label
+                        </a>
+                      
+                        
+                      </div></td>
+                </thead>
+                <tbody>
+                    {{range .}}
+
+                     <tr>
+                      <td class="text-center">{{.Statistics.Flights.Total}}</td>
+                      <td class="text-center">{{.Statistics.Flights.Delayed}}</td>
+                      <td class="text-center">{{.Time.Label}}</td>
+
+                     </tr>
+
+
+                     {{end}}
+                </tbody>
+              </table>
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item"><a class="page-link" onclick="prev()" >Previous</a></li>
+                  <li class="page-item"><a class="page-link" onclick="pg(1)">1</a></li>
+                  <li class="page-item"><a class="page-link" onclick="pg(2)">2</a></li>
+                  <li class="page-item"><a class="page-link" onclick="pg(3)">3</a></li>
+                  <li class="page-item"><a class="page-link" onclick="pg(4)">4</a></li>
+                  <li class="page-item"><a class="page-link" onclick="pg(5)">5</a></li>
+                  <li class="page-item"><a class="page-link" onclick="pg(6)">6</a></li>
+                  <li class="page-item"><a class="page-link" onclick="pg(7)">7</a></li>
+                  <li class="page-item"><a class="page-link" onclick="pg(8)">8</a></li>
+                  <li class="page-item"><a class="page-link" onclick="pg(9)">9</a></li>
+                  <li class="page-item"><a class="page-link" onclick="pg(10)">10</a></li>
+                  <li class="page-item"><a class="page-link" onclick="next()">Next</a></li>
+                </ul>
+              </nav> 
+              <script>
+                  const currentPage=()=>{
+                  const queryString = window.location.search;
+                  console.log(queryString);
+                  const urlParams = new URLSearchParams(queryString);
+                  let code=urlParams.get('code')
+                  let filename=urlParams.get('filename')
+                  let page=urlParams.get('pagenum')
+                  let sort=urlParams.get('sort')
+                  return {code,filename,page,sort}
+                }
+                const pg=(pagenumber)=>{
+                    var obj=currentPage()
+                    var code=obj.code;
+                    var filename=obj.filename;
+                    let sort=obj.sort
+                    console.log(obj)
+                    location.href=`/readAirport?code=${code}&filename=${filename}&pagenum=${pagenumber}&sort=${sort}`
+                }
+                  const next=()=>{
+                    var obj=currentPage()
+                    var code=obj.code;
+                    var filename=obj.filename;
+                    var pagenumber=obj.page;
+                    let sort=obj.sort
+                    pagenumber=Number(pagenumber)+1
+                    location.href=`/readAirport?code=${code}&filename=${filename}&pagenum=${pagenumber}&sort=${sort}`
+
+                    
+                 }
+                 const prev=()=>{
+                    var obj=currentPage()
+                    var code=obj.code;
+                    var filename=obj.filename;
+                    var pagenumber=obj.page;
+                    let sort=obj.sort
+                    pagenumber=Number(pagenumber)-1
+                    location.href=`/readAirport?code=${code}&filename=${filename}&pagenum=${pagenumber}&sort=${sort}`
+
+                     
+                   }
+                const Sort=(value)=>{
+
+                    var obj=currentPage()
+                    var code=obj.code;
+                    var filename=obj.filename;
+                    var pagenumber=obj.page;
+                  if(value==1){
+                    location.href=`/readAirport?code=${code}&filename=${filename}&pagenum=${pagenumber}&sort=${value}`
+
+                  }
+                  else if(value==0){
+                    location.href=`/readAirport?code=${code}&filename=${filename}&pagenum=${pagenumber}&sort=${value}`
+                  }
+
+
+                }   
+              </script>
+
+            </div>
+            {{else}}
+            <h5 class="text-center"><span style="color:rgb(253, 61, 2)">No data found check you file name or airport code...!!!</span></h5>
+
+              {{end}}
+        </dv>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</html>
